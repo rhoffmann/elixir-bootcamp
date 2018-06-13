@@ -1,18 +1,13 @@
 defmodule Cards do
-  @moduledoc """
-  Documentation for Cards.
-  """
+  def create_deck do
+    ["Ace", "Two", "Three", "Four"]
+  end
 
-  @doc """
-  Hello world.
+  def shuffle(deck) do
+    Enum.shuffle(deck)
+  end
 
-  ## Examples
-
-      iex> Cards.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def contains?(deck, hand) do
+    Enum.member?(deck, hand)
   end
 end
