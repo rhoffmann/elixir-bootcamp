@@ -59,7 +59,7 @@ defmodule Cards do
   ## Examples
 
       iex> deck = Cards.create_deck
-      iex> { hand, remaining_deck } = Cards.deal(deck, 2)
+      iex> { hand, _remaining_deck } = Cards.deal(deck, 2)
       iex> hand
       ["Kreuz Ass", "Kreuz Zwei"]
 
