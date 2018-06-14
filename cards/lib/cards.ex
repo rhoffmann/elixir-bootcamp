@@ -38,7 +38,14 @@ defmodule Cards do
   end
 
   @doc """
-  check if a deck contains a hand
+    Checks whether a deck contains a specific card
+
+  ## Examples
+
+      iex> deck = Cards.create_deck
+      iex> Cards.contains?(deck, "Karo Acht")
+      true
+
   """
   def contains?(deck, hand) do
     Enum.member?(deck, hand)
