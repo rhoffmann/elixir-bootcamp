@@ -5,6 +5,36 @@ defmodule Identicon do
     |> get_color
     |> create_grid
     |> filter_even_squares
+    |> build_pixel_map
+    |> draw_image
+    |> save_image(input)
+  end
+
+  def save_image(image, input) do
+    File.write("#{input}.png", image)
+  end
+
+  def draw_image(%Identicon.Image{ color: color, pixel_map: pixel_map }) do
+    image = :egd.create(250, 250)
+    fill = :egd.color(color)
+
+    Enum.each pixel_map, fn({ start, stop }) ->
+      :egd.filledRectangle(image, start, stop, fill)
+    end
+
+    :egd.render(image)
+  end
+
+  def build_pixel_map(%Identicon.Image{grid: grid} = image) do
+    pixel_map = Enum.map grid, fn ({ _value, index }) ->
+      horiz = rem(index, 5) * 50
+      vert = div(index, 5) * 50
+      top_left = { horiz, vert }
+      bottom_right = { horiz + 50, vert + 50 }
+      { top_left, bottom_right }
+    end
+
+    %Identicon.Image{ image | pixel_map: pixel_map }
   end
 
   def filter_even_squares(%Identicon.Image{grid: grid} = image) do
@@ -23,8 +53,7 @@ defmodule Identicon do
   end
 
   def get_color(%Identicon.Image{ hex: [r, g, b | _tail ]} = image) do
-    # %Identicon.Image{ image | color: { r, g, b } }
-    %Identicon.Image{ image | color: %{ r: r, g: g, b: b } }
+    %Identicon.Image{ image | color: { r, g, b } }
   end
 
   def mirror_row(row) do
