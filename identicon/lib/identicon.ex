@@ -27,6 +27,5 @@ defmodule Identicon do
     hex
     |> Enum.chunk(3)
     |> Enum.map(&mirror_row/1)
-    # |> mirror_row
   end
 end
