@@ -5,9 +5,11 @@
     <li class="collection-item">
       <%= topic.title %>
 
-      <%= link to: topic_path(@conn, :edit, topic.id), class: "btn-small right" do %>
-        edit
-      <% end %>
+      <div class="right">
+        <%= link to: topic_path(@conn, :edit, topic.id) do %>
+          edit
+        <% end %>
+      <div>
     </li>
   <% end %>
 </ul>

@@ -42,8 +42,8 @@ defmodule DiscussWeb.TopicController do
 
 
   def update(conn, %{"id" => topic_id, "topic" => topic}) do
-    changeset = Repo.get(Topic, topic_id)
-      |> Topic.changeset(topic)
+    old_topic = Repo.get(Topic, topic_id)
+    changeset = Topic.changeset(old_topic, topic)
 
     case Repo.update(changeset) do
       {:ok, topic} ->
@@ -53,7 +53,7 @@ defmodule DiscussWeb.TopicController do
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Error updating Topic")
-        |> render("edut.html", changeset: changeset)
+        |> render("edit.html", changeset: changeset, topic: old_topic)
     end
   end
 end
