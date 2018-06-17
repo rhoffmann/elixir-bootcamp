@@ -9,6 +9,9 @@
 
     <title>Hello Discuss!</title>
 
+     <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
@@ -23,17 +26,30 @@
       </div>
     </nav>
 
-    <div id="app"></div>
     <div class="container">
-
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
+    </div>
+     <!-- /container -->
 
-    </div> <!-- /container -->
+    <script>
+      var _msgs = {
+        info: "<%= get_flash(@conn, :info) %>",
+        error: "<%= get_flash(@conn, :error) %>"
+      };
+      if (M && M.toast) {
+        _msgs.info && M.toast({
+          html: _msgs.info,
+          classes: 'toast-info'
+        });
+        _msgs.error && M.toast({
+          html: _msgs.error,
+          classes: 'toast-error'
+        });
+      }
+    </script>
+
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
