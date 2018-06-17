@@ -21,8 +21,13 @@
     <nav class="light-blue">
       <div class="nav-wrapper container">
         <a href="/" class="brand-logo">
-        Discussions
+          Discussions
         </a>
+        <ul class="right">
+          <li>
+            <a class="waves-effect waves-light" href="/auth/github">Login with Github</a>
+          </li>
+        </ul>
       </div>
     </nav>
 

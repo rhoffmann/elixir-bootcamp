@@ -24,8 +24,9 @@ config :logger, :console,
 
 config :ueberauth, Ueberauth,
   providers: [
-    github: { Ueberauth.Strategy.Github, []}
+    github: { Ueberauth.Strategy.Github, [default_scope: ""]}
   ]
+  # user,public_repo
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

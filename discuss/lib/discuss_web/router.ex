@@ -15,11 +15,11 @@ defmodule DiscussWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    # plug :cors
   end
 
   scope "/", DiscussWeb do
     pipe_through :browser # Use the default browser stack
-
 
     get "/", TopicController, :index
     resources "/topics", TopicController
@@ -28,11 +28,12 @@ defmodule DiscussWeb.Router do
 
 
   scope "/auth", DiscussWeb do
-    pipe_through: browser
+    pipe_through :browser
 
-    get "/:provider", AuthControler, :request
-    get "/:provider/callback", AuthControler, :callback
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
+
   # Other scopes may use custom stacks.
   # scope "/api", DiscussWeb do
   #   pipe_through :api
