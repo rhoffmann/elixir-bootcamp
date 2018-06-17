@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const App = () => <h1>React</h1>;
+// const App = () => <h1>React</h1>;
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-)
+// ReactDOM.render(
+//   <App />,
+//   document.getElementById('app')
+// )
 
 // Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
