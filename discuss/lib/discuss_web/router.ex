@@ -20,6 +20,7 @@ defmodule DiscussWeb.Router do
     # get "/about", PageController, :about
 
     get "/topics/new", TopicController, :new
+    get "/topics", TopicController, :list
     post "/topics", TopicController, :create
   end
 

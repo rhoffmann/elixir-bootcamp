@@ -1,7 +1,7 @@
 defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
 
-  alias Discuss.Topic
+  alias Discuss.{Topic, Repo}
 
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
@@ -10,17 +10,20 @@ defmodule DiscussWeb.TopicController do
   end
 
   def create(conn, %{"topic" => topic}) do
-    IO.puts "***"
-    inspect topic
-    IO.puts "***"
     changeset = Topic.changeset(%Topic{}, topic)
 
+    case Repo.insert(changeset) do
+      {:ok, _topic} ->
+        conn
+        |> put_flash(:info, "Topic created successfully.")
+        |> redirect(to: topic_path(conn, :list))
+      {:error, changeset} ->
+        render conn, "new.html", changeset: changeset
+    end
+  end
 
-    # case changeset do
-    #   %{ valid? => true } ->
-    # end
-    # inspect changeset
-    # if changeset.valid?
-
+  def list(conn, _params) do
+    topics = Repo.all(Topic)
+    render conn, "list.html", topics: topics
   end
 end
