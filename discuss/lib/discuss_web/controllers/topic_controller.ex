@@ -3,11 +3,19 @@ defmodule DiscussWeb.TopicController do
 
   alias Discuss.{Topic, Repo}
 
+
+  def index(conn, _params) do
+    topics = Repo.all(Topic)
+    render conn, "index.html", topics: topics
+  end
+
+
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
 
     render conn, "new.html", [changeset: changeset]
   end
+
 
   def create(conn, %{"topic" => topic}) do
     changeset = Topic.changeset(%Topic{}, topic)
@@ -16,14 +24,12 @@ defmodule DiscussWeb.TopicController do
       {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic created successfully.")
-        |> redirect(to: topic_path(conn, :list))
+        |> redirect(to: topic_path(conn, :index))
       {:error, changeset} ->
-        render conn, "new.html", changeset: changeset
+        conn
+        |> put_flash(:error, "Error creating Topic")
+        |> render("new.html", changeset: changeset)
     end
   end
 
-  def list(conn, _params) do
-    topics = Repo.all(Topic)
-    render conn, "list.html", topics: topics
-  end
 end
