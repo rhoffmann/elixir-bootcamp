@@ -6,8 +6,12 @@
       <%= topic.title %>
 
       <div class="right">
-        <%= link to: topic_path(@conn, :edit, topic.id) do %>
+        <%= link to: topic_path(@conn, :edit, topic) do %>
           edit
+        <% end %>
+        &nbsp;
+        <%= link to: topic_path(@conn, :delete, topic), method: :delete do %>
+          delete
         <% end %>
       <div>
     </li>
