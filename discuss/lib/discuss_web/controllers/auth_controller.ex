@@ -16,7 +16,7 @@ defmodule DiscussWeb.AuthController do
   end
 
 
-  defp signin(conn, changeset) do
+  defp login(conn, changeset) do
     case insert_or_update_user(changeset) do
       {:ok, user} ->
         conn
@@ -25,15 +25,14 @@ defmodule DiscussWeb.AuthController do
         |> redirect(to: topic_path(conn, :index))
       {:error, _reason} ->
         conn
-        |> put_flash(:error, "Error signing in")
+        |> put_flash(:error, "Error logging in")
         |> redirect(to: topic_path(conn, :index))
     end
   end
 
   def logout(conn, _params) do
     conn
-    |> assign(:user, nil)
-    |> delete_session(:user_id)
+    |> configure_session(drop: true)
     |> put_flash(:info, "Good Bye!")
     |> redirect(to: topic_path(conn, :index))
   end
@@ -50,6 +49,6 @@ defmodule DiscussWeb.AuthController do
 
     changeset = User.changeset(%User{}, user_params)
 
-    signin(conn, changeset)
+    login(conn, changeset)
   end
 end
