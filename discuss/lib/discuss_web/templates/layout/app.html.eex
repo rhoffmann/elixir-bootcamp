@@ -25,7 +25,13 @@
         </a>
         <ul class="right">
           <li>
-            <a class="waves-effect waves-light" href="/auth/github">Login with Github</a>
+            <%# <%= if @conn.assigns[:user] %>
+            <%= if assigns.user do %>
+              <%= assigns.user.full_name %>
+              <%= link "Logout", to: auth_path(@conn, :logout), class: "waves-effect waves-light btn" %>
+            <% else %>
+              <%= link "Sign in with GitHub", to: auth_path(@conn, :request, "github"), class: "waves-effect waves-light btn" %>
+            <% end %>
           </li>
         </ul>
       </div>
