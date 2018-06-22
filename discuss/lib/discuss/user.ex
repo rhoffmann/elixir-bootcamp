@@ -9,6 +9,8 @@ defmodule Discuss.User do
     field :full_name, :string
     field :image_url, :string
 
+    has_many(:topics, Discuss.Topic)
+
     timestamps()
   end
 
