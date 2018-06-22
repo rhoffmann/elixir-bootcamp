@@ -17,6 +17,12 @@ defmodule DiscussWeb.TopicController do
   end
 
 
+  def show(conn, %{"id" => topic_id}) do
+    topic = Repo.get!(Topic, topic_id)
+    render conn, "show.html", topic: topic
+  end
+
+
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
 
@@ -82,6 +88,7 @@ defmodule DiscussWeb.TopicController do
 
   defp check_topic_owner(conn, _params) do
     %{params: %{"id" => topic_id }} = conn
+
     if has_user?(conn) && Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
       conn
     else
