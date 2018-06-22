@@ -8,7 +8,7 @@ defmodule DiscussWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug DiscussWeb.Plugs.SetUser
+    plug DiscussWeb.Plugs.SetUser # module plug
   end
 
   # pipeline :authenticate_user do
@@ -24,7 +24,6 @@ defmodule DiscussWeb.Router do
 
     get "/", TopicController, :index
     resources "/topics", TopicController
-    # get "/:page", PageController, :index
   end
 
 
