@@ -7,6 +7,9 @@ defmodule DiscussWeb.TopicController do
     :new, :create, :update, :edit, :delete
   ]
 
+  plug :check_topic_owner when action in [
+    :edit, :update, :delete
+  ]
 
   def index(conn, _params) do
     topics = Repo.all(Topic)
@@ -71,5 +74,21 @@ defmodule DiscussWeb.TopicController do
     conn
     |> put_flash(:info, "Topic deleted")
     |> redirect(to: topic_path(conn, :index))
+  end
+
+  def has_user?(conn) do
+    Map.has_key?(conn.assigns, :user)
+  end
+
+  defp check_topic_owner(conn, _params) do
+    %{params: %{"id" => topic_id }} = conn
+    if has_user?(conn) && Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You cannot edit this topic")
+      |> redirect(to: topic_path(conn, :index))
+      |> halt()
+    end
   end
 end
