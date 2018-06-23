@@ -1,1 +1,7 @@
 <h5><%= @topic.title %></h5>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    window.createSocket({ topicId: "<%= @topic.id %>" });
+  });
+</script>
